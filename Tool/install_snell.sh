@@ -61,17 +61,10 @@ systemctl start snell
 # === 获取 IPv6 地址 ===
 IPV6=$(ip -6 addr show scope global | grep inet6 | awk '{print $2}' | cut -d/ -f1 | head -n 1)
 
-# === 输出 Surge YAML 配置 ===
+# === 输出标准 YAML 配置 ===
 echo
 echo "✅ Snell 已安装并启动成功"
-echo "📄 以下是 Surge / Loon 可用的代理配置："
-echo "----------------------------------------"
-echo "proxies:"
-echo "  - name: Snell"
-echo "    type: snell"
-echo "    server: \"[$IPV6]\""
-echo "    port: $PORT"
-echo "    psk: \"$PSK\""
-echo "    obfs: tls"
-echo "    tfo: true"
-echo "----------------------------------------"
+echo "📄 以下是 Snell 节点的 YAML 配置（Clash / SingBox 格式）："
+echo "-----------------------------------------------------------"
+echo "- {name: Snell IPv6, server: ${SERVER}, port: ${PORT}, type: snell, psk: ${PSK}, obfs: tls, udp: true}"
+echo "-----------------------------------------------------------"
