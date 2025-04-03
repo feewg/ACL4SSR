@@ -15,7 +15,7 @@ else
     echo "❌ 不支持的架构: $ARCH"
     exit 1
 fi
-
+ 
 # === 固定版本与下载地址 ===
 VERSION="v4.1.1"
 SNELL_URL="https://dl.nssurge.com/snell/snell-server-${VERSION}-linux-${ARCH}.zip"
