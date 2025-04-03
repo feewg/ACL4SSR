@@ -5,7 +5,7 @@ set -e
 read -p "请输入 Snell 监听端口 [默认 443]: " PORT
 PORT=${PORT:-443}
 
-# === 获取系统架构 ===
+# === 检测系统架构 ===
 ARCH=$(uname -m)
 if [[ "$ARCH" == "x86_64" ]]; then
     ARCH="amd64"
@@ -16,12 +16,11 @@ else
     exit 1
 fi
 
-# === 获取最新版本并下载 ===
-echo "📦 正在获取 Snell 最新版本..."
-SNELL_VERSION=$(curl -s https://api.github.com/repos/surge-networks/snell/releases/latest | grep tag_name | cut -d '"' -f 4)
-SNELL_URL="https://github.com/surge-networks/snell/releases/download/${SNELL_VERSION}/snell-server-${SNELL_VERSION}-linux-${ARCH}.zip"
-echo "🔗 下载链接: $SNELL_URL"
+# === 固定版本与下载地址 ===
+VERSION="v4.1.1"
+SNELL_URL="https://dl.nssurge.com/snell/snell-server-${VERSION}-linux-${ARCH}.zip"
 
+echo "📦 正在下载 Snell $VERSION..."
 curl -L -o /tmp/snell.zip "$SNELL_URL"
 unzip -o /tmp/snell.zip -d /tmp/
 chmod +x /tmp/snell-server
@@ -65,7 +64,7 @@ IPV6=$(ip -6 addr show scope global | grep inet6 | awk '{print $2}' | cut -d/ -f
 # === 输出 Surge YAML 配置 ===
 echo
 echo "✅ Snell 已安装并启动成功"
-echo "📄 以下是 Surge/SingBox 可用的代理配置："
+echo "📄 以下是 Surge / Loon 可用的代理配置："
 echo "----------------------------------------"
 echo "proxies:"
 echo "  - name: Snell"
