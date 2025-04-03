@@ -58,8 +58,9 @@ systemctl daemon-reload
 systemctl enable snell
 systemctl start snell
 
-# === 获取 IPv6 地址 ===
+# === 获取 IPv6 地址（优先） ===
 IPV6=$(ip -6 addr show scope global | grep inet6 | awk '{print $2}' | cut -d/ -f1 | head -n 1)
+SERVER="[$IPV6]"
 
 # === 输出标准 YAML 配置 ===
 echo
@@ -68,3 +69,4 @@ echo "📄 以下是 Snell 节点的 YAML 配置（Clash / SingBox 格式）："
 echo "-----------------------------------------------------------"
 echo "- {name: Snell IPv6, server: ${SERVER}, port: ${PORT}, type: snell, psk: ${PSK}, obfs: tls, udp: true}"
 echo "-----------------------------------------------------------"
+
